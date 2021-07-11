@@ -1,7 +1,12 @@
 import React from "react";
+import { getCompletedItems } from "../store/todosSlice";
+import { useSelector } from "react-redux";
 
 function TotalCompleteItems() {
-  return <h4 className="mt-3">Total Complete Items: 5</h4>;
+  const completedTodos = useSelector(getCompletedItems());
+  return (
+    <h4 className="mt-3">Total Complete Items: {completedTodos.length}</h4>
+  );
 }
 
 export default TotalCompleteItems;

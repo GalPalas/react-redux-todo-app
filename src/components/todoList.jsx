@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TodoItem from "./todoItem";
-import { useSelector } from "react-redux";
-import { getTodos } from "../store/todosSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { getTodos, loadTodosFromApi } from "../store/todosSlice";
 
 function TodoList() {
+  const dispatch = useDispatch();
   const todos = useSelector(getTodos());
+
+  useEffect(() => {
+    dispatch(loadTodosFromApi());
+  }, [dispatch]);
 
   return (
     <div>

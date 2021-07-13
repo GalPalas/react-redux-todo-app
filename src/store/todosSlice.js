@@ -9,20 +9,18 @@ const todosSlice = createSlice({
     loading: false,
   },
   reducers: {
+    callRequested: (todos, action) => {
+      todos.loading = true;
+    },
     callSuccess: (todos, action) => {
       todos.list = action.payload;
+      todos.loading = false;
     },
     callFailed: (todos, action) => {
       todos.loading = false;
-      console.log(action.payload);
     },
-    addTodo: (todos, action) => {
-      const newTodo = {
-        id: Date.now(),
-        title: action.payload.title,
-        completed: false,
-      };
-      todos.list.push(newTodo);
+    todoAdded: (todos, action) => {
+      todos.list.push(action.payload);
     },
     toggleCompleted: (todos, action) => {
       const index = todos.list.findIndex(
@@ -36,13 +34,36 @@ const todosSlice = createSlice({
   },
 });
 
-export const { callSuccess, callFailed, addTodo, toggleCompleted, deleteTodo } =
-  todosSlice.actions;
+export const {
+  callRequested,
+  callSuccess,
+  callFailed,
+  todoAdded,
+  toggleCompleted,
+  deleteTodo,
+} = todosSlice.actions;
 export default todosSlice.reducer;
 
+const url = "/todos";
+
 export const loadTodosFromApi = () => (dispatch, getState) => {
-  dispatch(apiCallBegan());
+  return dispatch(
+    apiCallBegan({
+      url,
+      onStart: callRequested.type,
+      onSuccess: callSuccess.type,
+      onError: callFailed.type,
+    })
+  );
 };
+
+export const addTodo = (title) =>
+  apiCallBegan({
+    url,
+    method: "post",
+    data: title,
+    onSuccess: todoAdded.type,
+  });
 
 export const getTodos = () =>
   createSelector(

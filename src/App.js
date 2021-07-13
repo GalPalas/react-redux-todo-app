@@ -1,6 +1,7 @@
 import AddTodoForm from "./components/addTodoForm";
 import TodoList from "./components/todoList";
 import TotalCompleteItems from "./components/totalCompleteItems";
+import { ToastContainer } from "react-toastify";
 import "./App.css";
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <TodoList />
         <TotalCompleteItems />
       </div>
+      <ToastContainer />
     </div>
   );
 }

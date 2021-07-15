@@ -23,7 +23,6 @@ const todosSlice = createSlice({
       todos.list.push(action.payload);
     },
     todoCompleted: (todos, action) => {
-      console.log("todoCompleted", action.payload.id);
       const index = todos.list.findIndex(
         (todo) => todo.id === action.payload.id
       );

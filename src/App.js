@@ -9,8 +9,8 @@ function App() {
     <div className="App">
       <div className="container bg-light p-4 mt-5">
         <h1>My Todo List</h1>
-        <AddTodoForm />
         <TodoList />
+        <AddTodoForm />
         <TotalCompleteItems />
       </div>
       <ToastContainer />

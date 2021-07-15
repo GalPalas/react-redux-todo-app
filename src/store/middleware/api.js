@@ -21,6 +21,7 @@ const api =
         method,
         data,
       });
+
       // dispatch(actions.apiCallSuccess(response.data));
       if (onSuccess) dispatch({ type: onSuccess, payload: response.data });
     } catch (error) {

@@ -5,6 +5,7 @@ import { getTodos, loadTodosFromApi } from "../store/todosSlice";
 
 function TodoList() {
   const dispatch = useDispatch();
+
   const todos = useSelector(getTodos());
 
   useEffect(() => {

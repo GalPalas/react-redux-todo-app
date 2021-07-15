@@ -23,13 +23,14 @@ const todosSlice = createSlice({
       todos.list.push(action.payload);
     },
     todoCompleted: (todos, action) => {
+      console.log("todoCompleted", action.payload.id);
       const index = todos.list.findIndex(
         (todo) => todo.id === action.payload.id
       );
       todos.list[index].completed = action.payload.completed;
     },
-    deleteTodo: (todos, action) => {
-      return todos.list.filter((todo) => todo.id !== action.payload.id);
+    todoDeleted: (todos, action) => {
+      todos.list = action.payload;
     },
   },
 });
@@ -40,7 +41,7 @@ export const {
   callFailed,
   todoAdded,
   todoCompleted,
-  deleteTodo,
+  todoDeleted,
 } = todosSlice.actions;
 export default todosSlice.reducer;
 
@@ -71,6 +72,13 @@ export const completedTodo = (id, completed) =>
     method: "patch",
     data: { completed },
     onSuccess: todoCompleted.type,
+  });
+
+export const deleteTodo = (id) =>
+  apiCallBegan({
+    url: url + "/" + id,
+    method: "delete",
+    onSuccess: todoDeleted.type,
   });
 
 export const getTodos = () =>

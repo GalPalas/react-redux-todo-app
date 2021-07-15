@@ -10,7 +10,7 @@ function TodoItem({ id, title, completed }) {
   };
 
   const handleDeleteClick = () => {
-    dispatch(deleteTodo({ id: id }));
+    dispatch(deleteTodo(id));
   };
 
   return (

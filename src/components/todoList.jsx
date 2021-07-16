@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import TodoItem from "./todoItem";
+import AddTodoForm from "./addTodoForm";
 import { useSelector, useDispatch } from "react-redux";
 import { getTodos, loadTodosFromApi } from "../store/todosSlice";
 import "./todoList.css";
@@ -49,6 +50,7 @@ function TodoList() {
               ))}
             </ul>
           </div>
+          <AddTodoForm />
         </div>
       </div>
     </div>

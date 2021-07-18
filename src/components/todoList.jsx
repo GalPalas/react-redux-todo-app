@@ -1,58 +1,57 @@
-import React, { useEffect } from "react";
+import React from "react";
 import TodoItem from "./todoItem";
 import AddTodoForm from "./addTodoForm";
-import { useSelector, useDispatch } from "react-redux";
-import { getTodos, loadTodosFromApi } from "../store/todosSlice";
+import { ToastContainer } from "react-toastify";
 import "./todoList.css";
 
-function TodoList() {
-  const dispatch = useDispatch();
-
-  const todos = useSelector(getTodos());
-
-  useEffect(() => {
-    dispatch(loadTodosFromApi());
-  }, [dispatch]);
-
+function TodoList({ id, title, collapseName, data }) {
   return (
-    <div className="accordion accordion-flush " id="accordionFlushExample">
-      <div className="accordion-item ">
-        <h2 className="accordion-header" id="flush-headingOne">
-          <button
-            className="accordion-button collapsed bg-light"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#flush-collapseOne"
-            aria-expanded="false"
-            aria-controls="flush-collapseOne"
-          >
-            <h2 className="text-primary fw-bold">Today</h2>
-            <span className="badge bg-primary rounded-pill fs-6 mx-2">
-              {todos.length}
-            </span>
-          </button>
-        </h2>
-        <div
-          id="flush-collapseOne"
-          className="accordion-collapse collapse"
-          aria-labelledby="flush-headingOne"
-          data-bs-parent="#accordionFlushExample"
-        >
-          <div className="accordion-body bg-light">
-            <ul className="list-group">
-              {todos.map((todo) => (
-                <TodoItem
-                  key={todo.id}
-                  id={todo.id}
-                  title={todo.title}
-                  completed={todo.completed}
-                />
-              ))}
-            </ul>
+    <div>
+      {data ? (
+        <div className="accordion accordion-flush " id="accordionFlushExample">
+          <div className="accordion-item ">
+            <h2 className="accordion-header" id="flush-headingOne">
+              <button
+                className="accordion-button collapsed bg-light"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target={"#" + collapseName}
+                aria-expanded="false"
+                aria-controls={collapseName}
+              >
+                <h2 className="text-primary fw-bold">{title}</h2>
+                <span className="badge bg-primary rounded-pill fs-6 mx-2">
+                  {data.length}
+                </span>
+              </button>
+            </h2>
+            <div
+              id={collapseName}
+              className="accordion-collapse collapse"
+              aria-labelledby="flush-headingOne"
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div className="accordion-body bg-light">
+                <ul className="list-group">
+                  {data.map((todo) => (
+                    <TodoItem
+                      key={todo.id}
+                      id={todo.id}
+                      title={todo.title}
+                      completed={todo.completed}
+                    />
+                  ))}
+                </ul>
+              </div>
+              <AddTodoForm id={id} />
+            </div>
           </div>
-          <AddTodoForm />
         </div>
-      </div>
+      ) : (
+        <div>
+          <ToastContainer />{" "}
+        </div>
+      )}
     </div>
   );
 }

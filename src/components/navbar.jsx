@@ -10,7 +10,7 @@ function Navbar() {
             alt=""
             width="30"
             height="30"
-            class="d-inline-block align-text-top"
+            className="d-inline-block align-text-top"
           ></img>
           Any Action
         </a>

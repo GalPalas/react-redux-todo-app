@@ -1,8 +1,8 @@
-import TodoList from "./components/todoList";
-import TotalCompleteItems from "./components/totalCompleteItems";
 import { ToastContainer } from "react-toastify";
-import "./App.css";
 import Navbar from "./components/navbar";
+import TodoLists from "./components/todoLists";
+import TotalCompleteItems from "./components/totalCompleteItems";
+import "./App.css";
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <Navbar />
       <div className="container bg-light p-4 mt-5">
         <h1>All Tasks</h1>
-        <TodoList />
+        <TodoLists />
         <TotalCompleteItems />
       </div>
       <ToastContainer />

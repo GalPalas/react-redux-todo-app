@@ -5,7 +5,8 @@ import { apiCallBegan } from "./api";
 const todosSlice = createSlice({
   name: "todos",
   initialState: {
-    list: [],
+    today: [],
+    tomorrow: [],
     loading: false,
   },
   reducers: {
@@ -13,23 +14,27 @@ const todosSlice = createSlice({
       todos.loading = true;
     },
     callSuccess: (todos, action) => {
-      todos.list = action.payload;
+      todos.today = action.payload;
+      todos.tomorrow = action.payload; //fix bug here!
       todos.loading = false;
     },
     callFailed: (todos, action) => {
       todos.loading = false;
     },
-    todoAdded: (todos, action) => {
-      todos.list.push(action.payload);
+    todayAdded: (todos, action) => {
+      todos.today.push(action.payload);
+    },
+    tomorrowAdded: (todos, action) => {
+      todos.tomorrow.push(action.payload);
     },
     todoCompleted: (todos, action) => {
-      const index = todos.list.findIndex(
+      const index = todos.today.findIndex(
         (todo) => todo.id === action.payload.id
       );
-      todos.list[index].completed = action.payload.completed;
+      todos.today[index].completed = action.payload.completed;
     },
     todoDeleted: (todos, action) => {
-      todos.list = action.payload;
+      todos.today = action.payload;
     },
   },
 });
@@ -38,7 +43,8 @@ export const {
   callRequested,
   callSuccess,
   callFailed,
-  todoAdded,
+  todayAdded,
+  tomorrowAdded,
   todoCompleted,
   todoDeleted,
 } = todosSlice.actions;
@@ -57,12 +63,12 @@ export const loadTodosFromApi = () => (dispatch, getState) => {
   );
 };
 
-export const addTodo = (title) =>
+export const addTodo = (id, title) =>
   apiCallBegan({
     url,
     method: "post",
-    data: title,
-    onSuccess: todoAdded.type,
+    data: { title: title },
+    onSuccess: id,
   });
 
 export const completedTodo = (id, completed) =>
@@ -80,14 +86,20 @@ export const deleteTodo = (id) =>
     onSuccess: todoDeleted.type,
   });
 
-export const getTodos = () =>
+export const todayTodos = () =>
   createSelector(
     (state) => state.entities.todos,
-    (todos) => todos.list
+    (todos) => todos.today
+  );
+
+export const tomorrowTodos = () =>
+  createSelector(
+    (state) => state.entities.todos,
+    (todos) => todos.tomorrow
   );
 
 export const getCompletedItems = () =>
   createSelector(
     (state) => state.entities.todos,
-    (todos) => todos.list.filter((todo) => todo.completed === true)
+    (todos) => todos.today.filter((todo) => todo.completed === true)
   );

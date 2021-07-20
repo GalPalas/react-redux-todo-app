@@ -4,7 +4,7 @@ import AddTodoForm from "./addTodoForm";
 import { ToastContainer } from "react-toastify";
 import "./todoList.css";
 
-function TodoList({ id, title, collapseName, data }) {
+function TodoList({ reducerType, url, title, collapseName, data }) {
   return (
     <div>
       {data ? (
@@ -43,7 +43,7 @@ function TodoList({ id, title, collapseName, data }) {
                   ))}
                 </ul>
               </div>
-              <AddTodoForm id={id} />
+              <AddTodoForm reducerType={reducerType} url={url} />
             </div>
           </div>
         </div>

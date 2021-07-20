@@ -7,6 +7,8 @@ const todosSlice = createSlice({
   initialState: {
     today: [],
     tomorrow: [],
+    upcoming: [],
+    someday: [],
     loading: false,
   },
   reducers: {
@@ -14,8 +16,11 @@ const todosSlice = createSlice({
       todos.loading = true;
     },
     callSuccess: (todos, action) => {
-      todos.today = action.payload;
-      todos.tomorrow = action.payload; //fix bug here!
+      let { today, tomorrow, upcoming, someday } = action.payload;
+      todos.today = today;
+      todos.tomorrow = tomorrow;
+      todos.upcoming = upcoming;
+      todos.someday = someday;
       todos.loading = false;
     },
     callFailed: (todos, action) => {
@@ -26,6 +31,12 @@ const todosSlice = createSlice({
     },
     tomorrowAdded: (todos, action) => {
       todos.tomorrow.push(action.payload);
+    },
+    upcomingAdded: (todos, action) => {
+      todos.upcoming.push(action.payload);
+    },
+    somedayAdded: (todos, action) => {
+      todos.someday.push(action.payload);
     },
     todoCompleted: (todos, action) => {
       const index = todos.today.findIndex(
@@ -63,12 +74,12 @@ export const loadTodosFromApi = () => (dispatch, getState) => {
   );
 };
 
-export const addTodo = (id, title) =>
+export const addTodo = (reducerType, url, title) =>
   apiCallBegan({
-    url,
+    url: url,
     method: "post",
     data: { title: title },
-    onSuccess: id,
+    onSuccess: reducerType,
   });
 
 export const completedTodo = (id, completed) =>
@@ -96,6 +107,18 @@ export const tomorrowTodos = () =>
   createSelector(
     (state) => state.entities.todos,
     (todos) => todos.tomorrow
+  );
+
+export const upcomingTodos = () =>
+  createSelector(
+    (state) => state.entities.todos,
+    (todos) => todos.upcoming
+  );
+
+export const somedayTodos = () =>
+  createSelector(
+    (state) => state.entities.todos,
+    (todos) => todos.someday
   );
 
 export const getCompletedItems = () =>

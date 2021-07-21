@@ -25,6 +25,7 @@ function TodoLists() {
       <TodoList
         addedReducerType="todos/todayAdded"
         completedReducerType="todos/todayCompleted"
+        deletedReducerType="todos/todayDeleted"
         url="/todos/today"
         title="Today"
         collapseName="today"
@@ -33,6 +34,7 @@ function TodoLists() {
       <TodoList
         addedReducerType="todos/tomorrowAdded"
         completedReducerType="todos/tomorrowCompleted"
+        deletedReducerType="todos/tomorrowDeleted"
         url="/todos/tomorrow"
         title="Tomorrow"
         collapseName="tomorrow"
@@ -41,6 +43,7 @@ function TodoLists() {
       <TodoList
         addedReducerType="todos/upcomingAdded"
         completedReducerType="todos/upcomingCompleted"
+        deletedReducerType="todos/upcomingDeleted"
         url="/todos/upcoming"
         title="Upcoming"
         collapseName="upcoming"
@@ -49,6 +52,7 @@ function TodoLists() {
       <TodoList
         addedReducerType="todos/somedayAdded"
         completedReducerType="todos/somedayCompleted"
+        deletedReducerType="todos/somedayDeleted"
         url="/todos/someday"
         title="Someday"
         collapseName="someday"

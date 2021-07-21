@@ -2,7 +2,14 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { completedTodo, deleteTodo } from "../store/todosSlice";
 
-function TodoItem({ id, url, completedReducerType, title, completed }) {
+function TodoItem({
+  id,
+  url,
+  completedReducerType,
+  deletedReducerType,
+  title,
+  completed,
+}) {
   const dispatch = useDispatch();
 
   const handleCompletedClick = () => {
@@ -10,7 +17,7 @@ function TodoItem({ id, url, completedReducerType, title, completed }) {
   };
 
   const handleDeleteClick = () => {
-    dispatch(deleteTodo(id));
+    dispatch(deleteTodo(id, url, deletedReducerType));
   };
 
   return (
@@ -23,7 +30,7 @@ function TodoItem({ id, url, completedReducerType, title, completed }) {
             defaultChecked={completed}
             onChange={handleCompletedClick}
           ></input>
-          {title}
+          {completed ? <s>{title}</s> : <p>{title} </p>}
         </span>
         <button className="btn btn-danger" onClick={handleDeleteClick}>
           Delete

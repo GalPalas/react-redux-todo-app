@@ -38,11 +38,29 @@ const todosSlice = createSlice({
     somedayAdded: (todos, action) => {
       todos.someday.push(action.payload);
     },
-    todoCompleted: (todos, action) => {
+    todayCompleted: (todos, action) => {
       const index = todos.today.findIndex(
         (todo) => todo.id === action.payload.id
       );
       todos.today[index].completed = action.payload.completed;
+    },
+    tomorrowCompleted: (todos, action) => {
+      const index = todos.tomorrow.findIndex(
+        (todo) => todo.id === action.payload.id
+      );
+      todos.tomorrow[index].completed = action.payload.completed;
+    },
+    upcomingCompleted: (todos, action) => {
+      const index = todos.upcoming.findIndex(
+        (todo) => todo.id === action.payload.id
+      );
+      todos.upcoming[index].completed = action.payload.completed;
+    },
+    somedayCompleted: (todos, action) => {
+      const index = todos.someday.findIndex(
+        (todo) => todo.id === action.payload.id
+      );
+      todos.someday[index].completed = action.payload.completed;
     },
     todoDeleted: (todos, action) => {
       todos.today = action.payload;
@@ -56,7 +74,12 @@ export const {
   callFailed,
   todayAdded,
   tomorrowAdded,
-  todoCompleted,
+  upcomingAdded,
+  somedayAdded,
+  todayCompleted,
+  tomorrowCompleted,
+  upcomingCompleted,
+  somedayCompleted,
   todoDeleted,
 } = todosSlice.actions;
 export default todosSlice.reducer;
@@ -74,20 +97,20 @@ export const loadTodosFromApi = () => (dispatch, getState) => {
   );
 };
 
-export const addTodo = (reducerType, url, title) =>
+export const addTodo = (addedReducerType, url, title) =>
   apiCallBegan({
     url: url,
     method: "post",
     data: { title: title },
-    onSuccess: reducerType,
+    onSuccess: addedReducerType,
   });
 
-export const completedTodo = (id, completed) =>
+export const completedTodo = (id, url, completedReducerType, completed) =>
   apiCallBegan({
     url: url + "/" + id,
     method: "patch",
     data: { completed },
-    onSuccess: todoCompleted.type,
+    onSuccess: completedReducerType,
   });
 
 export const deleteTodo = (id) =>
@@ -97,6 +120,7 @@ export const deleteTodo = (id) =>
     onSuccess: todoDeleted.type,
   });
 
+/* --------------- Get todos types from store ---------------  */
 export const todayTodos = () =>
   createSelector(
     (state) => state.entities.todos,
@@ -120,6 +144,7 @@ export const somedayTodos = () =>
     (state) => state.entities.todos,
     (todos) => todos.someday
   );
+/* --------------- End => Get todos types from store  ---------------  */
 
 export const getCompletedItems = () =>
   createSelector(

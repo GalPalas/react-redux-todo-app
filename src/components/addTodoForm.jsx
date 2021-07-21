@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addTodo } from "../store/todosSlice";
 
-function AddTodoForm({ reducerType, url }) {
+function AddTodoForm({ addedReducerType, url }) {
   const dispatch = useDispatch();
   const [value, setValue] = useState("");
 
   const onSubmit = (event) => {
     event.preventDefault();
-    dispatch(addTodo(reducerType, url, value));
+    dispatch(addTodo(addedReducerType, url, value));
   };
 
   return (

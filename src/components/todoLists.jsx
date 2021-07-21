@@ -23,28 +23,32 @@ function TodoLists() {
   return (
     <div>
       <TodoList
-        reducerType="todos/todayAdded"
+        addedReducerType="todos/todayAdded"
+        completedReducerType="todos/todayCompleted"
         url="/todos/today"
         title="Today"
         collapseName="today"
         data={todayData}
       />
       <TodoList
-        reducerType="todos/tomorrowAdded"
+        addedReducerType="todos/tomorrowAdded"
+        completedReducerType="todos/tomorrowCompleted"
         url="/todos/tomorrow"
         title="Tomorrow"
         collapseName="tomorrow"
         data={tomorrowData}
       />
       <TodoList
-        reducerType="todos/upcomingAdded"
+        addedReducerType="todos/upcomingAdded"
+        completedReducerType="todos/upcomingCompleted"
         url="/todos/upcoming"
         title="Upcoming"
         collapseName="upcoming"
         data={upcomingData}
       />
       <TodoList
-        reducerType="todos/somedayAdded"
+        addedReducerType="todos/somedayAdded"
+        completedReducerType="todos/somedayCompleted"
         url="/todos/someday"
         title="Someday"
         collapseName="someday"

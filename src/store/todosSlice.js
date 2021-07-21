@@ -62,8 +62,17 @@ const todosSlice = createSlice({
       );
       todos.someday[index].completed = action.payload.completed;
     },
-    todoDeleted: (todos, action) => {
+    todayDeleted: (todos, action) => {
       todos.today = action.payload;
+    },
+    tomorrowDeleted: (todos, action) => {
+      todos.tomorrow = action.payload;
+    },
+    upcomingDeleted: (todos, action) => {
+      todos.upcoming = action.payload;
+    },
+    somedayDeleted: (todos, action) => {
+      todos.someday = action.payload;
     },
   },
 });
@@ -80,7 +89,10 @@ export const {
   tomorrowCompleted,
   upcomingCompleted,
   somedayCompleted,
-  todoDeleted,
+  todayDeleted,
+  tomorrowDeleted,
+  upcomingDeleted,
+  somedayDeleted,
 } = todosSlice.actions;
 export default todosSlice.reducer;
 
@@ -113,11 +125,11 @@ export const completedTodo = (id, url, completedReducerType, completed) =>
     onSuccess: completedReducerType,
   });
 
-export const deleteTodo = (id) =>
+export const deleteTodo = (id, url, deletedReducerType) =>
   apiCallBegan({
     url: url + "/" + id,
     method: "delete",
-    onSuccess: todoDeleted.type,
+    onSuccess: deletedReducerType,
   });
 
 /* --------------- Get todos types from store ---------------  */

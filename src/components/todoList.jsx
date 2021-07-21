@@ -7,6 +7,7 @@ import "./todoList.css";
 function TodoList({
   addedReducerType,
   completedReducerType,
+  deletedReducerType,
   url,
   title,
   collapseName,
@@ -46,6 +47,7 @@ function TodoList({
                       id={todo.id}
                       url={url}
                       completedReducerType={completedReducerType}
+                      deletedReducerType={deletedReducerType}
                       title={todo.title}
                       completed={todo.completed}
                     />

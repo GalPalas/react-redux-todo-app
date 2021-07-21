@@ -4,7 +4,14 @@ import AddTodoForm from "./addTodoForm";
 import { ToastContainer } from "react-toastify";
 import "./todoList.css";
 
-function TodoList({ reducerType, url, title, collapseName, data }) {
+function TodoList({
+  addedReducerType,
+  completedReducerType,
+  url,
+  title,
+  collapseName,
+  data,
+}) {
   return (
     <div>
       {data ? (
@@ -37,13 +44,15 @@ function TodoList({ reducerType, url, title, collapseName, data }) {
                     <TodoItem
                       key={todo.id}
                       id={todo.id}
+                      url={url}
+                      completedReducerType={completedReducerType}
                       title={todo.title}
                       completed={todo.completed}
                     />
                   ))}
                 </ul>
               </div>
-              <AddTodoForm reducerType={reducerType} url={url} />
+              <AddTodoForm addedReducerType={addedReducerType} url={url} />
             </div>
           </div>
         </div>

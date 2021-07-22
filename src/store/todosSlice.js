@@ -96,12 +96,11 @@ export const {
 } = todosSlice.actions;
 export default todosSlice.reducer;
 
-const url = "/todos";
-
+/* Load all  todos from API */
 export const loadTodosFromApi = () => (dispatch, getState) => {
   return dispatch(
     apiCallBegan({
-      url,
+      url: "/todos",
       onStart: callRequested.type,
       onSuccess: callSuccess.type,
       onError: callFailed.type,
@@ -109,6 +108,7 @@ export const loadTodosFromApi = () => (dispatch, getState) => {
   );
 };
 
+/* Add a todo to one of the lists */
 export const addTodo = (addedReducerType, url, title) =>
   apiCallBegan({
     url: url,
@@ -117,6 +117,7 @@ export const addTodo = (addedReducerType, url, title) =>
     onSuccess: addedReducerType,
   });
 
+/* Complete a todo to one of the lists */
 export const completedTodo = (id, url, completedReducerType, completed) =>
   apiCallBegan({
     url: url + "/" + id,
@@ -125,6 +126,7 @@ export const completedTodo = (id, url, completedReducerType, completed) =>
     onSuccess: completedReducerType,
   });
 
+/* Delete todo from one of the lists */
 export const deleteTodo = (id, url, deletedReducerType) =>
   apiCallBegan({
     url: url + "/" + id,
@@ -161,5 +163,9 @@ export const somedayTodos = () =>
 export const getCompletedItems = () =>
   createSelector(
     (state) => state.entities.todos,
-    (todos) => todos.today.filter((todo) => todo.completed === true)
+    (todos) =>
+      todos.today.filter((todo) => todo.completed === true).length +
+      todos.tomorrow.filter((todo) => todo.completed === true).length +
+      todos.upcoming.filter((todo) => todo.completed === true).length +
+      todos.someday.filter((todo) => todo.completed === true).length
   );

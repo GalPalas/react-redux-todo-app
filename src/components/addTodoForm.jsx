@@ -13,7 +13,7 @@ function AddTodoForm({ addedReducerType, url }) {
 
   return (
     <form onSubmit={onSubmit} className="form-inline my-3">
-      <div className="container-fluid">
+      <div className="container-fluid bg-light">
         <div className="row">
           <div className="col-11">
             <input
